@@ -18,9 +18,9 @@ A dynamic player statistics viewer for the Wynncraft MMORPG, built with **React*
 - **Icons:** Lucide React
 - **Data:** Wynncraft Public API v3
 
-## Project Roadmap (The "Clone" Plan)
-This project serves as the foundational module for a larger goal: **A complete Wynncraft Website Clone.**
-- [x] **Phase 1:** Player Stats Inspector (Completed)
+## Project Roadmap
+I plan to make this project into a fully wynncraft clone website
+- [ ] **Phase 1:** Player Stats Inspector
 - [ ] **Phase 2:** Item Database (Search items by rarity/tier)
 - [ ] **Phase 3:** Guild Leaderboards & Territory Tracking
 - [ ] **Phase 4:** Full UI overhaul to match the official game aesthetic
