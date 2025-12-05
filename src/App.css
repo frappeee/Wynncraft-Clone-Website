@@ -1,0 +1,68 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 17em;
+  padding: 1.5em;
+  margin-bottom: 50px;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #83C73C);
+}
+/* .logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+} */
+
+/* .bg-container {
+    background: url("./assets/wynncraft_bg.jpg");
+    background-size: contain;
+    background-position: top;
+    background: cover;
+} */
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.search-form {
+  width: 100%;
+  max-width: 28rem;
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.input-text {
+  width: 100%;
+  background-color: #83C73C;
+  border: 2px solid;
+  border-radius: 9999px;
+  padding: 1rem;
+  color: white;
+  transition: all 150ms ease-in-out;
+}
+
+.input-text::placeholder {
+  color: #64748b
+}
+
+.input-text:focus {
+  outline: none;
+  border-color: #10b981;
+}

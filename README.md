@@ -1,26 +1,16 @@
-## WIP
+# React + Vite
 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Wynncraft Player Stats Inspector (React)
+Currently, two official plugins are available:
 
-A dynamic player statistics viewer for the Wynncraft MMORPG, built with **React** and **vanilla CSS**. This project interfaces directly with the **Wynncraft v3 API** to fetch and visualize live user data, including 3D skin renders, total levels, and individual class progress.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Features
-- **Real-Time API Fetching:** Connects to `api.wynncraft.com/v3` to get the latest player data.
-- **Dynamic Search:** Handles errors gracefully (e.g., player not found) with loading states.
-- **Data Parsing:** Converts complex JSON objects (character data) into sortable, mapped arrays.
-- **Visual Polish:** Features 3D bust rendering and custom CSS animations.
-- **Responsive Design:** Fully styled with standard CSS (no frameworks) to look good on mobile and desktop.
+## React Compiler
 
-## Tech Stack
-- **Frontend:** React.js (Vite)
-- **Styling:** Standard CSS (Scoped & Modular)
-- **Icons:** Lucide React
-- **Data:** Wynncraft Public API v3
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Project Roadmap
-I plan to make this project into a fully wynncraft clone website
-- [ ] **Phase 1:** Player Stats Inspector
-- [ ] **Phase 2:** Item Database (Search items by rarity/tier)
-- [ ] **Phase 3:** Guild Leaderboards & Territory Tracking
-- [ ] **Phase 4:** Full UI overhaul to match the official game aesthetic
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
