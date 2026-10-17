@@ -1,3 +1,5 @@
+## WIP
+
 A dynamic player statistics viewer for the Wynncraft MMORPG, built with **React** and **vanilla CSS**. This project interfaces directly with the **Wynncraft v3 API** to fetch and visualize live user data, including 3D skin renders, total levels, and individual class progress.
 
 ## Features
