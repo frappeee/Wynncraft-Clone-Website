@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/wynn/:path*",
+      "destination": "https://api.wynncraft.com/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
