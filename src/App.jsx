@@ -1,82 +1,100 @@
-import React, { useState } from 'react'
-import wynnLogo from './assets/wynncraft_logo.png'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { Header } from './components/Header';
+import { PortalHome } from './components/PortalHome';
+import { PlayerProfile } from './components/PlayerProfile';
+import { LoadingSpinner } from './components/LoadingSpinner';
+import { ErrorDisplay } from './components/ErrorDisplay';
+import { Footer } from './components/Footer';
+import { fetchWynnPlayer } from './services/wynnApi';
+import { handleWynnOAuthCallback } from './services/wynnAuth';
 
 function App() {
-  const [username, setUsername] = useState('');
+  const [currentView, setCurrentView] = useState('portal');
+  const [searchInput, setSearchInput] = useState('');
+  const [activeQuery, setActiveQuery] = useState('');
   const [playerData, setPlayerData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchPlayer = async (e) => {
-    e.preventDefault(); //prevents page reload
-    if(!username) {
-      return;
-    }
+  useEffect(() => {
+    handleWynnOAuthCallback().catch(() => {});
+  }, []);
 
+  const handleSearch = async (username) => {
+    if (!username || !username.trim()) return;
+
+    const trimmed = username.trim();
+    setActiveQuery(trimmed);
     setLoading(true);
     setError(null);
-    setPlayerData(null);
 
     try {
-      const response = await fetch('https://api.wynncraft.com/v3/player/${username}')
-
-      if(response.ok) {
-        throw new Error("Player not found");
-      }
-
-      const data = await response.json();
+      const data = await fetchWynnPlayer(trimmed);
       setPlayerData(data);
-    }
-    catch(err) {
-      setError(err.message);
-    }
-    finally {
+      setCurrentView('profile');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      setError(err.message || `Failed to retrieve data for player "${trimmed}".`);
+    } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const handleReturnHome = () => {
+    setCurrentView('portal');
+    setPlayerData(null);
+    setError(null);
+    setSearchInput('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleRetry = () => {
+    if (activeQuery) {
+      handleSearch(activeQuery);
+    }
+  };
+
+  const handleCancelLoading = () => {
+    setLoading(false);
+    if (!playerData) {
+      setCurrentView('portal');
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://wynncraft.com" target="_blank">
-          <img src={wynnLogo} className="logo" alt="wynn logo" />
-        </a>
-      </div>
+    <div className="min-h-screen flex flex-col bg-[#080d0c] text-slate-200 selection:bg-emerald-500/30 selection:text-emerald-300">
+      <Header
+        currentView={currentView}
+        onSearch={handleSearch}
+        onReturnHome={handleReturnHome}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+      />
 
-      <h1>The Minecraft MMORPG</h1>
-      {/* <h2>Enter a username</h2> */}
-      <form onSubmit={fetchPlayer} className='search-form'>
-        <input 
-        type="text" 
-        placeholder='Search a player...' 
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className='input-text'/>
+      <main className="flex-1 flex flex-col w-full">
+        {loading ? (
+          <LoadingSpinner username={activeQuery} onCancel={handleCancelLoading} />
+        ) : error ? (
+          <ErrorDisplay
+            error={error}
+            onRetry={handleRetry}
+            onSelectMock={handleSearch}
+            onReturnHome={handleReturnHome}
+          />
+        ) : currentView === 'profile' && playerData ? (
+          <PlayerProfile player={playerData} onReturnHome={handleReturnHome} />
+        ) : (
+          <PortalHome
+            onSearch={handleSearch}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+          />
+        )}
+      </main>
 
-        <button type='submit' disabled={loading}></button>
-      </form>
-
-      {loading && <p className='loading-text'>Searching data...</p>}
-
-      {error && (
-        <div className='error-box'>
-          <Shield size={20}></Shield>
-          <span>{error}</span>
-        </div>
-      )}
-
-      {playerData && (
-        <>
-        <div className='profile-card'>
-          <div className='profile-left'>
-            <img src="" alt="" />
-          </div>
-        </div>
-        </>
-      )}
-    </>
-  )
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
